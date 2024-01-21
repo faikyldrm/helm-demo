@@ -1,0 +1,11 @@
+# my-configmap-chart/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-%s" (include "faikChallenge.producerAppName" .) ("configmap")}}
+data:
+  AMQP_SERVER: {{ include "common.names.fullname" .Subcharts.rabbitmq }}
+  AMQP_PORT: '{{ .Values.rabbitmq.service.ports.amqp }}'
+  AMQP_USER: {{ .Values.rabbitmq.auth.username }}
+  QUE_NAME: {{ .Values.producer.quename }}
+  

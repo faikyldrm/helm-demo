@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "faikChallenge.producerAppName" .}}
+  labels:
+    {{- include "faikChallenge.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "faikChallenge.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "faikChallenge.selectorLabels" . | nindent 8 }}
+        {{- include "faikChallenge.producerSelectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+        - name: init-checks
+          image: praqma/network-multitool
+          command: ['sh', '-c', ' telnet {{ include "common.names.fullname" .Subcharts.rabbitmq }} {{ .Values.rabbitmq.service.ports.amqp }}']
+      containers:
+        - name: {{ include "faikChallenge.producerAppName" .}}
+          image: "{{ .Values.producer.image.repository }}:{{ .Values.producer.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.producer.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: {{ printf "%s-%s" (include "faikChallenge.producerAppName" .) ("configmap")}}
+          env:
+            - name: AMQP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rabbitmq.secretPasswordName" .Subcharts.rabbitmq }}
+                  key: {{ include "rabbitmq.secretPasswordKey" .Subcharts.rabbitmq }}
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /funccheck
+              port: http

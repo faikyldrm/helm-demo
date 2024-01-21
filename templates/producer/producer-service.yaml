@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "faikChallenge.producerAppName" .}}
+  labels:
+    {{- include "faikChallenge.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.producer.service.type }}
+  ports:
+    - port: {{ .Values.producer.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "faikChallenge.selectorLabels" . | nindent 4 }}
+    {{- include "faikChallenge.producerSelectorLabels" . | nindent 4 }}

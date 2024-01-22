@@ -8,7 +8,7 @@ producer:
     repository: faikyildirim/demoproducer
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v3"
+    tag: "v4-arm64" #for arm64 arch
   quename: "CustomQue"
   service:
     type: ClusterIP
@@ -19,7 +19,7 @@ consumer:
     repository: faikyildirim/democonsumer
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v2"
+    tag: "v2-arm64" #for arm64 arch
   quename: "CustomQue"
   service:
     type: ClusterIP

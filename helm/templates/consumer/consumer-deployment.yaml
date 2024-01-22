@@ -22,7 +22,15 @@ spec:
       initContainers:
         - name: init-checks
           image: praqma/network-multitool
-          command: ['sh', '-c', ' curl http://{{ include "faikChallenge.producerAppName" .}}:{{ .Values.producer.service.port }}/funccheck']
+          command:
+            - sh
+            - '-c'
+            - >
+              set -x;
+              while [ $(curl -sw '%{http_code}' "http://{{ include "faikChallenge.producerAppName" .}}:{{ .Values.producer.service.port }}/funccheck" -o /dev/null) -ne 200 ]; do
+                sleep 1;
+                echo Waiting for consumer; 
+              done
       containers:
         - name: {{ include "faikChallenge.consumerAppName" .}}
           image: "{{ .Values.consumer.image.repository }}:{{ .Values.consumer.image.tag | default .Chart.AppVersion }}"

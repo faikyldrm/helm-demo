@@ -22,7 +22,7 @@ spec:
       initContainers:
         - name: init-checks
           image: praqma/network-multitool
-          command: ['sh', '-c', ' telnet {{ include "common.names.fullname" .Subcharts.rabbitmq }} {{ .Values.rabbitmq.service.ports.amqp }}']
+          command: ['sh', '-c', ' until telnet {{ include "common.names.fullname" .Subcharts.rabbitmq }} {{ .Values.rabbitmq.service.ports.amqp }} > /dev/null; do echo Waiting for rabbitmq; sleep 1; done; ']
       containers:
         - name: {{ include "faikChallenge.producerAppName" .}}
           image: "{{ .Values.producer.image.repository }}:{{ .Values.producer.image.tag | default .Chart.AppVersion }}"

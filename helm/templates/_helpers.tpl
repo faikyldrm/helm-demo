@@ -60,7 +60,7 @@ release: producer
 Producer Selector labels
 */}}
 {{- define "faikChallenge.consumerSelectorLabels" -}}
-release: producer
+release: consumer
 {{- end }}
 {{/*
 producer App Name

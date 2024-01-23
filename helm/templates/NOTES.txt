@@ -2,16 +2,14 @@ CHART NAME: {{ .Chart.Name }}
 CHART VERSION: {{ .Chart.Version }}
 APP VERSION: {{ .Chart.AppVersion }}
  
-
-
- port forward 
+1- Expose app service with port-forward
 
  kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ include "faikChallenge.producerAppName" .}} {{ .Values.producer.service.port }}:{{ .Values.producer.service.port }} &
-  
+2-  Send curl req to exposed app 
   curl http://localhost:{{ .Values.producer.service.port }}/sendtestmessage 
+3- Get the consumer app logs for message getting from que
 
-  and check consumer pod logs
-     export podName=$(kubectl get pods --namespace {{ .Release.Namespace }}  -l "release=consumer" --no-headers -o custom-columns=":metadata.name")
-
-   echo "kubectl logs  $podName --namespace {{ .Release.Namespace }}"
+  export podName=$(kubectl get pods --namespace {{ .Release.Namespace }}  -l "release=consumer" --no-headers -o custom-columns=":metadata.name")
+  echo "kubectl logs  $podName --namespace {{ .Release.Namespace }}"
+4- Poc is okay
 

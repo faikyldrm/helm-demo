@@ -18,7 +18,7 @@ processor_architecture=$(dpkg --print-architecture)
 echo "kubectl install"
 if [ "$processor_architecture" == "arm64" ]; then
   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl"
-elif 
+else
    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 fi
 
@@ -39,7 +39,7 @@ sudo usermod -aG docker $USER && sudo newgrp docker << subshell
 echo "minikube set drive"
 minikube config set driver docker
 echo "start minikube"
-minikube start
+minikube start --driver=docker
 
 
 echo "challange chart install"

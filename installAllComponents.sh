@@ -13,15 +13,28 @@ chmod +x get_helm.sh
 ./get_helm.sh
 rm get_helm.sh
 
+processor_architecture=$(dpkg --print-architecture)
 
 echo "kubectl install"
+if [ "$processor_architecture" == "arm64" ]; then
   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl"
+elif [ "$processor_architecture" == "x86_64" ]; then
+   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+fi
+
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 
 echo "Minikube install"
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-arm64
-sudo install minikube-linux-arm64 /usr/local/bin/minikube
+if [ "$processor_architecture" == "arm64" ]; then
+  curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-arm64
+  sudo install minikube-linux-arm64 /usr/local/bin/minikube
+elif [ "$processor_architecture" == "x86_64" ]; then
+   curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64
+   sudo install minikube-darwin-amd64 /usr/local/bin/minikube
+fi
+
+
 sudo usermod -aG docker $USER && newgrp docker << subshell 
 echo "minikube set drive"
 minikube config set driver docker

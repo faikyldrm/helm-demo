@@ -45,6 +45,6 @@ minikube start --driver=docker
 echo "challange chart install"
 if [ "$processor_architecture" == "arm64" ]; then
 helm install challange -f ./helm/values.yaml  ./helm
-elif [ "$processor_architecture" == "x86_64" ]; then
+else
 helm install challange    ./helm  --set producer.image.tag="v4"  --set consumer.image.tag="v2" 
  fi

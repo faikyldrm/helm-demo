@@ -12,6 +12,27 @@ Prebuild images can find in here for [producer](https://hub.docker.com/r/faikyil
 Shellscript install below apps;
 
 1- Minikube
+
 2- kubectl
+
 3- Helm
-4- helm applicatyo
+
+4- Poc application install with helm
+
+Steps to execute:
+
+clone repo
+
+```bash
+git clone https://github.com/faikyldrm/helm-demo.git 
+```
+
+file execution permission
+```bash
+chmod +x installAllComponents.sh
+``` 
+Execute the file
+
+```bash
+./installAllComponents.sh
+```

@@ -36,7 +36,7 @@ else
 fi
 
 
-#sudo usermod -aG docker $USER && sudo newgrp docker << subshell 
+sudo usermod -aG docker $USER && sudo newgrp docker
 echo "minikube set drive"
 minikube config set driver docker
 echo "start minikube"

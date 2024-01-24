@@ -2,10 +2,10 @@
 echo "Docker Install"
 sudo apt-get install -y uidmap
 curl -fsSL https://get.docker.com/rootless -o get-docker.sh
+
+export FORCE_ROOTLESS_INSTALL=1
 sh get-docker.sh
-#sudo groupadd docker
-#sudo gpasswd -a $USER docker
-sudo service docker restart
+#sudo service docker restart
 docker context use default
 
 echo "Helm install"

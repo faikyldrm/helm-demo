@@ -2,11 +2,12 @@
 echo "Docker Install"
 sudo apt install -y dbus-user-session
 sudo apt install -y fuse-overlayfs
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo apt remove docker docker-engine docker.io containerd runc
 sudo apt-get install -y uidmap
 sudo apt install docker-ce docker-ce-cli containerd.io
 sudo systemctl disable --now docker.service docker.socket
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
 curl -fsSL https://get.docker.com/rootless -o get-docker.sh
 sh get-docker.sh
 systemctl --user start docker

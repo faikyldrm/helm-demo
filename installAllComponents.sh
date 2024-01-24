@@ -1,9 +1,10 @@
 #!/bin/bash
 echo "Docker Install"
+sudo apt-get install -y uidmap
 curl -fsSL https://get.docker.com/rootless -o get-docker.sh
 sh get-docker.sh
-sudo groupadd docker
-sudo gpasswd -a $USER docker
+#sudo groupadd docker
+#sudo gpasswd -a $USER docker
 sudo service docker restart
 docker context use default
 

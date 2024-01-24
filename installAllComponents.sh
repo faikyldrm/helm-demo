@@ -1,10 +1,14 @@
 #!/bin/bash
 echo "Docker Install"
+sudo apt install -y dbus-user-session
+sudo apt install -y fuse-overlayfs
+sudo apt remove docker docker-engine docker.io containerd runc
 sudo apt-get install -y uidmap
+sudo apt install docker-ce docker-ce-cli containerd.io
+sudo systemctl disable --now docker.service docker.socket
 curl -fsSL https://get.docker.com/rootless -o get-docker.sh
-
-export FORCE_ROOTLESS_INSTALL=1
 sh get-docker.sh
+systemctl --user start docker
 #sudo service docker restart
 docker context use default
 

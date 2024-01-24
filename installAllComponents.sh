@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Docker Install"
-udo apt-get install uidmap -y
+sudo apt-get install uidmap -y
 curl -fsSL https://get.docker.com/rootless -o get-docker.sh
 export FORCE_ROOTLESS_INSTALL=1
 sh get-docker.sh

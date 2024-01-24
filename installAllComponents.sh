@@ -5,6 +5,7 @@ curl -fsSL https://get.docker.com/rootless -o get-docker.sh
 export SKIP_IPTABLES=1
 export FORCE_ROOTLESS_INSTALL=1
 sh get-docker.sh
+export PATH=/home/$USER/bin:$PATH
 sudo groupadd docker
 sudo gpasswd -a $USER docker
 sudo service docker restart

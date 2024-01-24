@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Docker Install"
 curl -fsSL https://get.docker.com/rootless -o get-docker.sh
-sudo sh get-docker.sh
+sh get-docker.sh
 sudo groupadd docker
 sudo gpasswd -a $USER docker
 sudo service docker restart

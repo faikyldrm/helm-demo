@@ -38,7 +38,7 @@ install docker
 ```bash
 ./rootless-docker.sh
 ```
-update basrc profile
+update bashrc profile
 ```bash
 . ~/.bashrc
 ```

@@ -47,7 +47,12 @@ install other components
 ./installAllComponents.sh
 ```
 installAllComponents includes
+
 Helm cli
+
 Kubectl
+
 minikube
+
 Helm chart
+

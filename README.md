@@ -9,15 +9,17 @@ Both application has own dockerfile and both app run in alpine image.
 
 Prebuild images can find in here for [producer](https://hub.docker.com/r/faikyildirim/demoproducer) and [consumer](https://hub.docker.com/r/faikyildirim/democonsumer) Details can be found under the apps folder.
 
-Shellscript install below apps;
+Shellscripts install below apps;
 
-1- Minikube
+1- Docker
 
-2- kubectl
+2- Minikube
 
-3- Helm
+3- kubectl
 
-4- Poc application install with helm
+4- Helm
+
+5- Poc application install with helm
 
 Steps to execute:
 
@@ -29,10 +31,23 @@ git clone https://github.com/faikyldrm/helm-demo.git
 
 file execution permission
 ```bash
+chmod +x rootless-docker.sh
 chmod +x installAllComponents.sh
-``` 
-Execute the file
-
+```
+install docker
+```bash
+./rootless-docker.sh
+```
+update basrc profile
+```bash
+. ~/.bashrc
+```
+install other components
 ```bash
 ./installAllComponents.sh
 ```
+installAllComponents includes
+Helm cli
+Kubectl
+minikube
+Helm chart

@@ -6,5 +6,7 @@ export SKIP_IPTABLES=1
 export FORCE_ROOTLESS_INSTALL=1
 sh get-docker.sh
 echo export PATH=/home/$USER/bin:$PATH >> ~/.bashrc
+export userID=$(id -u $USER)
+echo export PATH=export DOCKER_HOST=unix:///run/user/$userID/docker.sock >> ~/.bashrc
 sudo groupadd docker
 sudo gpasswd -a $USER docker
